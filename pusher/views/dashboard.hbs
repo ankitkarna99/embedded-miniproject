@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Basic Computer Controls</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <!--     Fonts and icons     -->
+    <link rel="stylesheet" type="text/css"
+        href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+    <!-- Material Kit CSS -->
+    <link href="assets/css/material-dashboard.css?v=2.1.2" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="wrapper ">
+        <div class="sidebar" data-color="purple" data-background-color="white">
+            <!--
+      Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
+
+      Tip 2: you can also add an image using data-image tag
+  -->
+            <div class="logo">
+                <a href="http://www.creative-tim.com" class="simple-text logo-mini">
+                    Computer Controls
+                </a>
+                <a href="http://www.creative-tim.com" class="simple-text logo-normal">
+                    Team AUS
+                </a>
+            </div>
+            <div class="sidebar-wrapper">
+                <ul class="nav">
+                    <li class="nav-item active  ">
+                        <a class="nav-link" href="#0">
+                            <i class="material-icons">dashboard</i>
+                            <p>Dashboard</p>
+                        </a>
+                    </li>
+                    <!-- your sidebar here -->
+                </ul>
+            </div>
+        </div>
+        <div class="main-panel">
+            <!-- Navbar -->
+            <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
+                <div class="container-fluid">
+                    <div class="navbar-wrapper">
+                        <a class="navbar-brand" href="javascript:;">Dashboard</a>
+                    </div>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="navbar-toggler-icon icon-bar"></span>
+                        <span class="navbar-toggler-icon icon-bar"></span>
+                        <span class="navbar-toggler-icon icon-bar"></span>
+                    </button>
+                    <div class="collapse navbar-collapse justify-content-end">
+
+                    </div>
+                </div>
+            </nav>
+            <!-- End Navbar -->
+            <div class="content">
+                <div class="container-fluid">
+                    <!-- your content here -->
+
+                    <p>Send Keys</p>
+
+                    <button class="btn btn-info" data-type="SENDKEYS" data-value="{LEFT}">
+                        Slide Left
+                    </button>
+
+                    <button class="btn btn-info" data-type="SENDKEYS" data-value="{RIGHT}">
+                        Slide Right
+                    </button>
+
+                    <button class="btn btn-info" data-type="SENDKEYS" data-value="{F5}">
+                        FullScreen
+                    </button>
+
+                    <button class="btn btn-info" data-type="SENDKEYS" data-value="{ESC}">
+                        Exit FullScreen
+                    </button>
+
+                    <br />
+                    <br />
+
+                    <p>Processes</p>
+
+                    <button class="btn btn-info" data-type="PROCESS" data-value="explorer.exe">
+                        Open My Computer
+                    </button>
+                    <button class="btn btn-info" data-type="PROCESS" data-value="taskmgr.exe">
+                        Open Task Manager
+                    </button>
+
+                    <br />
+                    <br />
+
+                    <p>Links</p>
+
+                    <button class="btn btn-info" data-type="LINK" data-value="https://www.youtube.com/">
+                        Open YouTube
+                    </button>
+
+                    <button class="btn btn-info" data-type="LINK" data-value="https://www.facebook.com/">
+                        Open Facebook
+                    </button>
+
+                    <br />
+                    <br />
+                    <p>Volume Control</p>
+
+                    <button class="btn btn-info" data-type="VOLUME" data-value="DOWN">
+                        Decrease Audio -
+                    </button>
+
+                    <button class="btn btn-info" data-type="VOLUME" data-value="UP">
+                        Increase Audio +
+                    </button>
+
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        const buttons = document.querySelectorAll(".btn");
+
+        buttons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                fetch('/event', {
+                    method: 'post',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        type: btn.dataset.type,
+                        value: btn.dataset.value,
+                    })
+                }).then(function (response) {
+                    return response.json();
+                }).then(function (data) {
+                    console.log("Event Posted!")
+                }).catch(err => {
+                    console.log(err);
+                });
+            })
+        })
+    </script>
+</body>
+
+</html>
